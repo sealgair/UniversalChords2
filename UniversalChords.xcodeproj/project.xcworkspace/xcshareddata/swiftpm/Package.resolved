@@ -1,0 +1,15 @@
+{
+  "originHash" : "54fe1efdda1f64fd28021978562c913c4205c533d55d9d3d55e970cabfe26c84",
+  "pins" : [
+    {
+      "identity" : "musictheory",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cemolcay/MusicTheory",
+      "state" : {
+        "revision" : "0457d035d0e4e7af83992bfffc31b094ba7a788f",
+        "version" : "1.4.0"
+      }
+    }
+  ],
+  "version" : 3
+}

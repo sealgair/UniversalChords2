@@ -14,6 +14,8 @@
 		ABF77A012BE713F200108EB2 /* UniversalChordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF77A002BE713F200108EB2 /* UniversalChordsTests.swift */; };
 		ABF77A0B2BE713F300108EB2 /* UniversalChordsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF77A0A2BE713F300108EB2 /* UniversalChordsUITests.swift */; };
 		ABF77A0D2BE713F300108EB2 /* UniversalChordsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF77A0C2BE713F300108EB2 /* UniversalChordsUITestsLaunchTests.swift */; };
+		ABF77A1D2BE71F9D00108EB2 /* MusicTheory in Frameworks */ = {isa = PBXBuildFile; productRef = ABF77A1C2BE71F9D00108EB2 /* MusicTheory */; };
+		ABF77A1F2BE727E600108EB2 /* MusicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF77A1E2BE727E600108EB2 /* MusicExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,7 @@
 		ABF77A062BE713F300108EB2 /* UniversalChordsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UniversalChordsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF77A0A2BE713F300108EB2 /* UniversalChordsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalChordsUITests.swift; sourceTree = "<group>"; };
 		ABF77A0C2BE713F300108EB2 /* UniversalChordsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalChordsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		ABF77A1E2BE727E600108EB2 /* MusicExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF77A1D2BE71F9D00108EB2 /* MusicTheory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,10 +79,12 @@
 		ABF779E22BE713F100108EB2 = {
 			isa = PBXGroup;
 			children = (
+				ABF77A1E2BE727E600108EB2 /* MusicExtensions.swift */,
 				ABF779ED2BE713F100108EB2 /* UniversalChords */,
 				ABF779FF2BE713F200108EB2 /* UniversalChordsTests */,
 				ABF77A092BE713F300108EB2 /* UniversalChordsUITests */,
 				ABF779EC2BE713F100108EB2 /* Products */,
+				ABF77A1B2BE71F9D00108EB2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,6 +135,13 @@
 			path = UniversalChordsUITests;
 			sourceTree = "<group>";
 		};
+		ABF77A1B2BE71F9D00108EB2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -145,6 +158,9 @@
 			dependencies = (
 			);
 			name = UniversalChords;
+			packageProductDependencies = (
+				ABF77A1C2BE71F9D00108EB2 /* MusicTheory */,
+			);
 			productName = UniversalChords;
 			productReference = ABF779EB2BE713F100108EB2 /* UniversalChords.app */;
 			productType = "com.apple.product-type.application";
@@ -217,6 +233,9 @@
 				Base,
 			);
 			mainGroup = ABF779E22BE713F100108EB2;
+			packageReferences = (
+				ABF77A1A2BE715CE00108EB2 /* XCRemoteSwiftPackageReference "MusicTheory" */,
+			);
 			productRefGroup = ABF779EC2BE713F100108EB2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -259,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF77A1F2BE727E600108EB2 /* MusicExtensions.swift in Sources */,
 				ABF779F12BE713F100108EB2 /* ContentView.swift in Sources */,
 				ABF779EF2BE713F100108EB2 /* UniversalChordsApp.swift in Sources */,
 			);
@@ -617,6 +637,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ABF77A1A2BE715CE00108EB2 /* XCRemoteSwiftPackageReference "MusicTheory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cemolcay/MusicTheory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ABF77A1C2BE71F9D00108EB2 /* MusicTheory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABF77A1A2BE715CE00108EB2 /* XCRemoteSwiftPackageReference "MusicTheory" */;
+			productName = MusicTheory;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = ABF779E32BE713F100108EB2 /* Project object */;
 }
