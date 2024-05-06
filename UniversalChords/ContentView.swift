@@ -43,15 +43,7 @@ struct ContentView: View {
                         Text(key.description)
                     }
                 }.frame(maxWidth: .infinity)
-                Picker("Note", selection: $note) {
-                    ForEach(0...3, id: \.self) { i in
-                        ForEach(Key.keysWithSharps) { note in
-                            Text(note.description).tag(note)
-                        }
-                    }
-                }
-                .pickerStyle(.wheel)
-                .frame(maxWidth: 80, maxHeight: .infinity)
+                ChordPickerView(note: $note)
             }.frame(maxHeight: .infinity)
         }
         .padding()
