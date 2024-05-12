@@ -19,3 +19,7 @@ extension ChordFifthType: Identifiable {
 extension Key: Identifiable {
     public var id: Self { self }
 }
+
+extension Pitch: Hashable {
+    
+}
