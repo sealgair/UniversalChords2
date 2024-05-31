@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB030C9D2BF055F100B7F385 /* FretBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB030C9C2BF055F100B7F385 /* FretBoardView.swift */; };
 		ABF779EF2BE713F100108EB2 /* UniversalChordsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF779EE2BE713F100108EB2 /* UniversalChordsApp.swift */; };
 		ABF779F12BE713F100108EB2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF779F02BE713F100108EB2 /* ContentView.swift */; };
 		ABF779F32BE713F200108EB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABF779F22BE713F200108EB2 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB030C9C2BF055F100B7F385 /* FretBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretBoardView.swift; sourceTree = "<group>"; };
 		ABF779EB2BE713F100108EB2 /* UniversalChords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniversalChords.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF779EE2BE713F100108EB2 /* UniversalChordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalChordsApp.swift; sourceTree = "<group>"; };
 		ABF779F02BE713F100108EB2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				ABF779F52BE713F200108EB2 /* Preview Content */,
 				ABF77A202BE8635800108EB2 /* ChordPickerView.swift */,
 				ABF77A222BE8759100108EB2 /* Instrument.swift */,
+				AB030C9C2BF055F100B7F385 /* FretBoardView.swift */,
 			);
 			path = UniversalChords;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB030C9D2BF055F100B7F385 /* FretBoardView.swift in Sources */,
 				ABF77A232BE8759100108EB2 /* Instrument.swift in Sources */,
 				ABF77A1F2BE727E600108EB2 /* MusicExtensions.swift in Sources */,
 				ABF77A212BE8635800108EB2 /* ChordPickerView.swift in Sources */,

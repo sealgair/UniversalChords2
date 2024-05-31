@@ -61,11 +61,8 @@ struct ContentView: View {
                 }
             }.pickerStyle(.segmented)
             HStack {
-                HStack {
-                    ForEach(chord.keys) { key in
-                        Text(key.description)
-                    }
-                }.frame(maxWidth: .infinity)
+                FretBoardView(instrument: instrument)
+                .cornerRadius(20)
                 ChordPickerView(note: $note)
             }.frame(maxHeight: .infinity)
             
