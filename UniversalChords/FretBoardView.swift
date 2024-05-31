@@ -15,9 +15,12 @@ struct FretBoardView: View {
     let stringColor = Color(red: 137/255, green: 148/255, blue: 153/255)
     let fretCount: Int = 14
     let fretHeight: Int = 60
+    let fingerSize: CGFloat = 40
     
     var instrument: Instrument
     var strings: Int { instrument.strings.count }
+    
+    var chord: Chord
     
     var stringNamesView: some View {
         GeometryReader() { geometry in
@@ -60,7 +63,6 @@ struct FretBoardView: View {
         GeometryReader() { geometry in
             Path() { path in
                 path.move(to: CGPoint(x: 0 , y: 0))
-                
                 path.addLine(to: CGPoint(x: Int(geometry.size.width), y: 0))
             }.stroke(nutColor, lineWidth: 8)
             
@@ -70,6 +72,27 @@ struct FretBoardView: View {
                     path.addLine(to: CGPoint(x: Int(geometry.size.width), y: fret * fretHeight))
                 }
             }.stroke(fretColor, lineWidth: 4)
+        }
+    }
+    
+    var notesView: some View {
+        GeometryReader() { geometry in
+            ZStack {
+                let width = (1/CGFloat(strings+1)) * geometry.size.width
+                ForEach(instrument.fingerings(chord: chord)) { finger in
+                    let s = CGFloat(instrument.strings.firstIndex(of: finger.string) ?? 0) + 1
+                    Text(finger.note.key.description)
+                        .foregroundStyle(.white)
+                        .font(.title)
+                        .background(alignment: .center) {
+                            Circle()
+                            .fill(.black)
+                            .frame(width: fingerSize, height: fingerSize)
+                        }
+                        .position(x: width * s,
+                                y: CGFloat(finger.position * fretHeight))
+                }
+            }
         }
     }
     
@@ -85,6 +108,7 @@ struct FretBoardView: View {
                     ZStack() {
                         fretsView
                         stringsView
+                        notesView
                     }.frame(height: CGFloat(fretCount * fretHeight))
                 }
             }
@@ -94,12 +118,15 @@ struct FretBoardView: View {
 }
 
 #Preview {
-    FretBoardView(instrument: Instrument(name: "Guitar", strings: [
-        Pitch("E1"),
-        Pitch("A1"),
-        Pitch("G1"),
-        Pitch("C1"),
-        Pitch("B1"),
-        Pitch("E1"),
-    ]))
+    FretBoardView(
+        instrument: Instrument(name: "Guitar", strings: [
+            Pitch("E2"),
+            Pitch("A2"),
+            Pitch("D3"),
+            Pitch("G3"),
+            Pitch("B3"),
+            Pitch("E4"),
+        ]),
+        chord: Chord(type: ChordType(third: .major), key: Key("C"))
+    )
 }
