@@ -14,6 +14,28 @@ extension ChordThirdType: Identifiable {
 
 extension ChordFifthType: Identifiable {
     public var id: Self { self }
+    
+    public var name: String {
+        switch self {
+        case .perfect: return "Perfect"
+        default: return self.description
+        }
+    }
+    public var notation: String {
+      switch self {
+      case .perfect: return ""
+      case .augmented: return "aug"
+      case .diminished: return "dim"
+      }
+    }
+}
+
+extension ChordSeventhType: Identifiable {
+    public var id: Self { self }
+}
+
+extension ChordSuspendedType: Identifiable {
+    public var id: Self { self }
 }
 
 extension Key: Identifiable {

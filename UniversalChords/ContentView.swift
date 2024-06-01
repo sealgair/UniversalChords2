@@ -12,7 +12,9 @@ struct ContentView: View {
     @State private var note = Key("c")
     @State private var thirdType = ChordThirdType.major
     @State private var fifthType = ChordFifthType.perfect
-    @State private var sixthType = false
+    @State private var isSixth = false
+    @State private var seventhType: ChordSeventhType? = nil
+    @State private var suspendedType: ChordSuspendedType? = nil
     
     let instruments = [
         Instrument(name: "Guitar", strings: [
@@ -40,7 +42,9 @@ struct ContentView: View {
         ChordType(
             third: thirdType,
             fifth: fifthType,
-            sixth: sixthType ? ChordSixthType() : nil
+            sixth: isSixth ? ChordSixthType() : nil,
+            seventh: seventhType,
+            suspended: suspendedType
         )
     }
     private var chord: Chord {
@@ -49,17 +53,43 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text(chord.description)
-            Picker("Chord Third Type", selection: $thirdType) {
-                ForEach(ChordThirdType.all) { chordType in
-                    Text(chordType.description).tag(chordType)
-                }
-            }.pickerStyle(.segmented)
-            Picker("Chord Fifth Type", selection: $fifthType) {
-                ForEach(ChordFifthType.all) { chordType in
-                    Text(chordType.description).tag(chordType)
-                }
-            }.pickerStyle(.segmented)
+            Text(chord.notation).font(.title)
+            HStack {
+                Picker("Chord Third Type", selection: $thirdType) {
+                    ForEach(ChordThirdType.all) { chordType in
+                        Text(chordType.notation).tag(chordType)
+                    }
+                }.pickerStyle(.segmented)
+                
+                Picker("Chord Fifth Type", selection: $fifthType) {
+                    ForEach(ChordFifthType.all) { chordType in
+                        Text(chordType.notation).tag(chordType)
+                    }
+                }.pickerStyle(.segmented)
+                
+                Picker(selection: $isSixth) {
+                    Text("").tag(false)
+                    Text("6").tag(true)
+                } label: {
+                    Text("6th")
+                }.pickerStyle(.segmented)
+            }
+            HStack {
+                Picker("7th", selection: $seventhType) {
+                    Text("").tag(nil as ChordSeventhType?)
+                    ForEach(ChordSeventhType.all) { chordType in
+                        Text(chordType.notation).tag(chordType as ChordSeventhType?)
+                    }
+                }.pickerStyle(.segmented)
+                
+                Picker("Sus", selection: $suspendedType) {
+                    Text("").tag(nil as ChordSuspendedType?)
+                    ForEach(ChordSuspendedType.all) { chordType in
+                        Text(chordType.notation).tag(chordType as ChordSuspendedType?)
+                    }
+                }.pickerStyle(.segmented)
+
+            }
             HStack {
                 FretBoardView(instrument: instrument, chord: chord)
                 .cornerRadius(20)

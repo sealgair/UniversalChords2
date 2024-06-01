@@ -15,7 +15,7 @@ struct Finger: Identifiable {
     var note: Pitch {
         return self.string + position
     }
-    var id: Int { note.rawValue }
+    var id: String { "\(string): \(note)" }
 }
 
 typealias Fingering = Array<Finger>
