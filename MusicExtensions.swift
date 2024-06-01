@@ -8,34 +8,59 @@
 import Foundation
 import MusicTheory
 
+
 extension ChordThirdType: Identifiable {
     public var id: Self { self }
+    
+    public var label: String {
+        switch self {
+        case .major: return "Major"
+        case .minor: return "Minor"
+        }
+    }
 }
 
 extension ChordFifthType: Identifiable {
     public var id: Self { self }
     
-    public var name: String {
-        switch self {
-        case .perfect: return "Perfect"
-        default: return self.description
-        }
-    }
-    public var notation: String {
+    public var label: String {
       switch self {
-      case .perfect: return ""
-      case .augmented: return "aug"
-      case .diminished: return "dim"
+      case .perfect: return "⊘"
+      case .augmented: return "Aug"
+      case .diminished: return "Dim"
       }
     }
 }
 
 extension ChordSeventhType: Identifiable {
     public var id: Self { self }
+    
+    public var label: String {
+        switch self {
+        case .major: return "Maj7"
+        case .dominant: return "7"
+        case .diminished: return "Dim7"
+        }
+    }
+    
+    public static var optionalAll: [ChordSeventhType?] {
+        return [nil] + self.all
+    }
 }
 
 extension ChordSuspendedType: Identifiable {
     public var id: Self { self }
+    
+    public var label: String {
+        switch self {
+        case .sus2: return "Sus 2"
+        case .sus4: return "Sus 4"
+        }
+    }
+    
+    public static var optionalAll: [ChordSuspendedType?] {
+        return [nil] + self.all
+    }
 }
 
 extension Key: Identifiable {

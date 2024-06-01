@@ -116,8 +116,10 @@ struct FretBoardView: View {
             }
             Spacer().frame(height: CGFloat(fretHeight))
         }
-        .scrollPosition(id: $position, anchor: .top)
         .background(boardColor)
+        .scrollPosition(id: $position, anchor: .top)
+        .scrollTargetBehavior(.viewAligned)
+        .safeAreaPadding(.vertical, 40)
     }
 }
 

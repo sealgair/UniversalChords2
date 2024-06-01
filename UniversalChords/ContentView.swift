@@ -54,40 +54,49 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text(chord.notation).font(.title)
+                .onTapGesture(count: 2) {
+                    thirdType = .major
+                    fifthType = .perfect
+                    isSixth = false
+                    seventhType = nil
+                    suspendedType = nil
+                }
             HStack {
                 Picker("Chord Third Type", selection: $thirdType) {
                     ForEach(ChordThirdType.all) { chordType in
-                        Text(chordType.notation).tag(chordType)
+                        Text(chordType.label).tag(chordType)
                     }
                 }.pickerStyle(.segmented)
                 
                 Picker("Chord Fifth Type", selection: $fifthType) {
                     ForEach(ChordFifthType.all) { chordType in
-                        Text(chordType.notation).tag(chordType)
+                        Text(chordType.label).tag(chordType)
                     }
                 }.pickerStyle(.segmented)
                 
                 Picker(selection: $isSixth) {
-                    Text("").tag(false)
+                    Text("⊘").tag(false)
                     Text("6").tag(true)
                 } label: {
                     Text("6th")
                 }.pickerStyle(.segmented)
+                    .containerRelativeFrame(.horizontal) { size, axis in
+                        return size * 0.2
+                    }
             }
             HStack {
                 Picker("7th", selection: $seventhType) {
-                    Text("").tag(nil as ChordSeventhType?)
-                    ForEach(ChordSeventhType.all) { chordType in
-                        Text(chordType.notation).tag(chordType as ChordSeventhType?)
+                    ForEach(ChordSeventhType.optionalAll, id: \.?.rawValue) { chordType in
+                        Text(chordType?.label ?? "⊘").tag(chordType)
                     }
                 }.pickerStyle(.segmented)
                 
                 Picker("Sus", selection: $suspendedType) {
-                    Text("").tag(nil as ChordSuspendedType?)
-                    ForEach(ChordSuspendedType.all) { chordType in
-                        Text(chordType.notation).tag(chordType as ChordSuspendedType?)
+                    ForEach(ChordSuspendedType.optionalAll, id: \.?.rawValue) { chordType in
+                        Text(chordType?.label ?? "⊘").tag(chordType as ChordSuspendedType?)
                     }
-                }.pickerStyle(.segmented)
+                }
+                .pickerStyle(.segmented)
 
             }
             HStack {
