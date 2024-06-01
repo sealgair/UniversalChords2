@@ -27,12 +27,13 @@ struct Instrument: Identifiable, Hashable {
     let strings: [Pitch]
     var id: String { self.name }
     
-    func fingerings(chord: Chord) -> Fingering {
+    func fingerings(chord: Chord, position: Int) -> Fingering {
         var fingering = Fingering()
         for string in strings {
+            let start = string.add(semitones: position) ?? string
             var positions = Array<Int>()
             for note in chord.keys {
-                positions.append(string.key.distance(to: note))
+                positions.append(position + start.key.distance(to: note))
             }
             fingering.append(Finger(position: positions.min() ?? 0, string: string))
         }

@@ -53,5 +53,7 @@ extension Key: Identifiable {
 }
 
 extension Pitch: Hashable {
-    
+    func add(semitones: Int) -> Pitch? {
+        return Pitch(rawValue: self.rawValue + semitones)
+    }
 }

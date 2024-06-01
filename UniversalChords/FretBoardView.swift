@@ -14,13 +14,14 @@ struct FretBoardView: View {
     let boardColor = Color(red: 238/255, green: 232/255, blue: 226/255)
     let stringColor = Color(red: 137/255, green: 148/255, blue: 153/255)
     let fretCount: Int = 14
-    let fretHeight: Int = 60
+    let fretHeight: Int = 80
     let fingerSize: CGFloat = 40
     
     var instrument: Instrument
     var strings: Int { instrument.strings.count }
     
     var chord: Chord
+    @State var position: Int? = 0
     
     var stringNamesView: some View {
         GeometryReader() { geometry in
@@ -43,7 +44,7 @@ struct FretBoardView: View {
                     let s: CGFloat = CGFloat(string)/CGFloat(strings+1)
                     let x: Int = Int(s * geometry.size.width)
                     path.move(to: CGPoint(x:x, y: -10))
-                    path.addLine(to: CGPoint(x:x, y: fretHeight*(fretCount+1)))
+                    path.addLine(to: CGPoint(x:x, y: fretHeight*(fretCount*2)))
                 }
             }.stroke(stringColor, lineWidth: 3)
         }
@@ -56,7 +57,7 @@ struct FretBoardView: View {
                 .frame(height: CGFloat(fretHeight))
                 .font(.title3)
             }
-        }
+        }.scrollTargetLayout()
     }
     
     var fretsView: some View {
@@ -79,7 +80,7 @@ struct FretBoardView: View {
         GeometryReader() { geometry in
             ZStack {
                 let width = (1/CGFloat(strings+1)) * geometry.size.width
-                ForEach(instrument.fingerings(chord: chord)) { finger in
+                ForEach(instrument.fingerings(chord: chord, position: (position ?? 0))) { finger in
                     let s = CGFloat(instrument.strings.firstIndex(of: finger.string) ?? 0) + 1
                     Text(finger.note.key.description)
                         .foregroundStyle(.white)
@@ -97,6 +98,7 @@ struct FretBoardView: View {
     }
     
     var body: some View {
+//        Text(String(position!))
         ScrollView() {
             Grid() {
                 GridRow() {
@@ -112,7 +114,9 @@ struct FretBoardView: View {
                     }.frame(height: CGFloat(fretCount * fretHeight))
                 }
             }
+            Spacer().frame(height: CGFloat(fretHeight))
         }
+        .scrollPosition(id: $position, anchor: .top)
         .background(boardColor)
     }
 }
