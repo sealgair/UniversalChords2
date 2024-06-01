@@ -25,11 +25,29 @@ struct ContentView: View {
             Pitch("B3"),
             Pitch("E4"),
         ]),
-        Instrument(name: "Ukulele", strings: [
+        Instrument(name: "Soprano Ukulele", strings: [
             Pitch("G4"),
             Pitch("C4"),
             Pitch("E4"),
             Pitch("A5"),
+        ]),
+        Instrument(name: "Banjo", strings: [
+            Pitch("D3"),
+            Pitch("G3"),
+            Pitch("B4"),
+            Pitch("D4"),
+        ]),
+        Instrument(name: "Mandolin", strings: [
+            Pitch("G3"),
+            Pitch("D4"),
+            Pitch("A5"),
+            Pitch("E5"),
+        ]),
+        Instrument(name: "Bass", strings: [
+            Pitch("E1"),
+            Pitch("A1"),
+            Pitch("D2"),
+            Pitch("G2"),
         ]),
     ]
     @State private var instrument: Instrument
