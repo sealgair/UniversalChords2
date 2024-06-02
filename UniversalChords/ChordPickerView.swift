@@ -10,16 +10,20 @@ import MusicTheory
 
 struct ChordPickerView: View {
     @Binding var note: Key
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
+        let background: Color = colorScheme == .dark ? .black : .white
+        let foreground: Color = colorScheme == .dark ? .white : .black
         VStack(spacing: -1) {
             ForEach(Key.keysWithSharps) { aNote in
                 let selected = aNote == note
                 Text(aNote.description)
                     .padding(10)
                     .frame(width: 50)
-                    .border(.black, width: 2)
-                    .background(selected ? .black : .clear)
-                    .foregroundColor(selected ? .white : .black)
+                    .border(foreground, width: 2)
+                    .background(selected ? foreground : background)
+                    .foregroundColor(selected ? background : foreground)
                     .onTapGesture {
                         note = aNote
                     }

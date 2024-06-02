@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		AB030C9D2BF055F100B7F385 /* FretBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB030C9C2BF055F100B7F385 /* FretBoardView.swift */; };
 		ABE66A602C0BCFDF00D9C64A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABE66A5F2C0BCFDF00D9C64A /* Launch Screen.storyboard */; };
+		ABE66A622C0C049200D9C64A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE66A612C0C049200D9C64A /* SettingsView.swift */; };
+		ABE66A642C0C07ED00D9C64A /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE66A632C0C07ED00D9C64A /* ColorExtensions.swift */; };
 		ABF779EF2BE713F100108EB2 /* UniversalChordsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF779EE2BE713F100108EB2 /* UniversalChordsApp.swift */; };
 		ABF779F12BE713F100108EB2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF779F02BE713F100108EB2 /* ContentView.swift */; };
 		ABF779F32BE713F200108EB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABF779F22BE713F200108EB2 /* Assets.xcassets */; };
@@ -43,6 +45,8 @@
 		AB030C9C2BF055F100B7F385 /* FretBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FretBoardView.swift; sourceTree = "<group>"; };
 		ABE66A5C2C0BC37400D9C64A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		ABE66A5F2C0BCFDF00D9C64A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		ABE66A612C0C049200D9C64A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		ABE66A632C0C07ED00D9C64A /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		ABF779EB2BE713F100108EB2 /* UniversalChords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniversalChords.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF779EE2BE713F100108EB2 /* UniversalChordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalChordsApp.swift; sourceTree = "<group>"; };
 		ABF779F02BE713F100108EB2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 		ABF779E22BE713F100108EB2 = {
 			isa = PBXGroup;
 			children = (
+				ABE66A632C0C07ED00D9C64A /* ColorExtensions.swift */,
 				ABE66A5F2C0BCFDF00D9C64A /* Launch Screen.storyboard */,
 				ABF77A1E2BE727E600108EB2 /* MusicExtensions.swift */,
 				ABF779ED2BE713F100108EB2 /* UniversalChords */,
@@ -120,6 +125,7 @@
 				ABF77A202BE8635800108EB2 /* ChordPickerView.swift */,
 				ABF77A222BE8759100108EB2 /* Instrument.swift */,
 				AB030C9C2BF055F100B7F385 /* FretBoardView.swift */,
+				ABE66A612C0C049200D9C64A /* SettingsView.swift */,
 			);
 			path = UniversalChords;
 			sourceTree = "<group>";
@@ -293,12 +299,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABE66A622C0C049200D9C64A /* SettingsView.swift in Sources */,
 				AB030C9D2BF055F100B7F385 /* FretBoardView.swift in Sources */,
 				ABF77A232BE8759100108EB2 /* Instrument.swift in Sources */,
 				ABF77A1F2BE727E600108EB2 /* MusicExtensions.swift in Sources */,
 				ABF77A212BE8635800108EB2 /* ChordPickerView.swift in Sources */,
 				ABF779F12BE713F100108EB2 /* ContentView.swift in Sources */,
 				ABF779EF2BE713F100108EB2 /* UniversalChordsApp.swift in Sources */,
+				ABE66A642C0C07ED00D9C64A /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

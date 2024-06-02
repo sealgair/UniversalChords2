@@ -9,10 +9,21 @@ import SwiftUI
 import MusicTheory
 
 struct FretBoardView: View {
-    let nutColor = Color(red: 25/255, green: 45/255, blue: 59/255)
-    let fretColor = Color(red: 181/255, green: 166/255, blue: 66/255)
-    let boardColor = Color(red: 238/255, green: 232/255, blue: 226/255)
-    let stringColor = Color(red: 137/255, green: 148/255, blue: 153/255)
+    let darkNutColor = Color(r: 255, g: 255, b: 240)
+    let darkFretColor =  Color(r: 137, g: 148, b: 153)
+    let darkBoardColor = Color(r: 50, g: 0, b: 5)
+    let darkStringColor = Color(r: 181, g: 166, b: 66)
+    
+    let lightNutColor = Color(r: 25, g: 45, b: 59)
+    let lightFretColor = Color(r: 181, g: 166, b: 66)
+    let lightBoardColor = Color(r: 238, g: 232, b: 226)
+    let lightStringColor = Color(r: 137, g: 148, b: 153)
+    
+    var nutColor: Color { colorScheme == .dark ? darkNutColor : lightNutColor }
+    var fretColor: Color { colorScheme == .dark ? darkFretColor : lightFretColor }
+    var boardColor: Color { colorScheme == .dark ? darkBoardColor : lightBoardColor }
+    var stringColor: Color { colorScheme == .dark ? darkStringColor : lightStringColor }
+    
     let fretCount: Int = 14
     let fretHeight: Int = 80
     let fingerSize: CGFloat = 40
@@ -22,6 +33,7 @@ struct FretBoardView: View {
     
     var chord: Chord
     @State var position: Int? = 0
+    @Environment(\.colorScheme) var colorScheme
     
     var stringNamesView: some View {
         GeometryReader() { geometry in
@@ -78,16 +90,18 @@ struct FretBoardView: View {
     
     var notesView: some View {
         GeometryReader() { geometry in
+            let background: Color = colorScheme == .dark ? .white : .black
+            let foreground: Color = colorScheme == .dark ? .black : .white
             ZStack {
                 let width = (1/CGFloat(strings+1)) * geometry.size.width
                 ForEach(instrument.fingerings(chord: chord, position: (position ?? 0))) { finger in
                     let s = CGFloat(instrument.strings.firstIndex(of: finger.string) ?? 0) + 1
                     Text(finger.note.key.description)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(foreground)
                         .font(.title)
                         .background(alignment: .center) {
                             Circle()
-                            .fill(.black)
+                            .fill(background)
                             .frame(width: fingerSize, height: fingerSize)
                         }
                         .position(x: width * s,
