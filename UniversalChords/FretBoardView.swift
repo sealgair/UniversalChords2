@@ -29,17 +29,24 @@ struct FretBoardView: View {
     let fingerSize: CGFloat = 40
     
     var instrument: Instrument
-    var strings: Int { instrument.strings.count }
+    var stringCount: Int { instrument.strings.count }
+    var orderedStrings: Array<Pitch> {
+        switch(handedness) {
+        case .right: instrument.strings
+        case .left:instrument.strings.reversed()
+        }
+    }
     
     var chord: Chord
     @State var position: Int? = 0
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("handedness") private var handedness: Handedness = .right
     
     var stringNamesView: some View {
         GeometryReader() { geometry in
-            let width = (1/CGFloat(strings-1)) * geometry.size.width
+            let width = (1/CGFloat(stringCount-1)) * geometry.size.width
             HStack(spacing: 0) {
-                ForEach(instrument.strings, id: \.self) { string in
+                ForEach(orderedStrings, id: \.self) { string in
                     Text(string.key.description)
                     .font(.title2)
                     .frame(width: width)
@@ -51,8 +58,8 @@ struct FretBoardView: View {
     var stringsView: some View {
         GeometryReader() { geometry in
             Path() { path in
-                for string in 0...strings-1 {
-                    let s: CGFloat = CGFloat(string)/CGFloat(strings-1)
+                for string in 0...stringCount-1 {
+                    let s: CGFloat = CGFloat(string)/CGFloat(stringCount-1)
                     let x: Int = Int(s * geometry.size.width)
                     path.move(to: CGPoint(x:x, y: -10))
                     path.addLine(to: CGPoint(x:x, y: fretHeight*fretCount+20))
@@ -104,9 +111,9 @@ struct FretBoardView: View {
             let background: Color = colorScheme == .dark ? .white : .black
             let foreground: Color = colorScheme == .dark ? .black : .white
             ZStack {
-                let width = (1/CGFloat(strings-1)) * geometry.size.width
+                let width = (1/CGFloat(stringCount-1)) * geometry.size.width
                 ForEach(instrument.fingerings(chord: chord, position: (position ?? 0))) { finger in
-                    let s = CGFloat(instrument.strings.firstIndex(of: finger.string) ?? 0)
+                    let s = CGFloat(orderedStrings.firstIndex(of: finger.string) ?? 0)
                     Text(finger.note.key.description)
                         .foregroundStyle(foreground)
                         .font(.title)

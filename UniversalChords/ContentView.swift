@@ -16,6 +16,8 @@ struct ContentView: View {
     @State private var seventhType: ChordSeventhType? = nil
     @State private var suspendedType: ChordSuspendedType? = nil
     
+    @State private var lefty = false
+    
     let instruments = [
         Instrument(name: "Guitar", strings: [
             Pitch("E2"),
@@ -70,6 +72,12 @@ struct ContentView: View {
     }
     
     var body: some View {
+        NavigationStack {
+            mainstuff
+        }
+    }
+    
+    var mainstuff: some View {
         VStack {
             Text(chord.notation).font(.title)
                 .onTapGesture(count: 2) {
@@ -122,9 +130,18 @@ struct ContentView: View {
                 ChordPickerView(note: $note)
             }.frame(maxHeight: .infinity)
             
-            Picker("Instruments", selection: $instrument) {
-                ForEach(instruments) { choice in
-                    Text(choice.name).tag(choice)
+            HStack {
+                Spacer()
+                Picker("Instruments", selection: $instrument) {
+                    ForEach(instruments) { choice in
+                        Text(choice.name).tag(choice)
+                    }
+                }
+                Spacer()
+                NavigationLink {
+                    SettingsView().navigationTitle("Settings")
+                } label: {
+                    Image(systemName:"gearshape.fill").foregroundColor(Color(UIColor.systemGray))
                 }
             }
         }

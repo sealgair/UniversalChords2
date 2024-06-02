@@ -7,16 +7,21 @@
 
 import SwiftUI
 
+enum Handedness: Int, Codable, CaseIterable {
+    case left
+    case right
+}
+
 struct SettingsView: View {
-    @State private var lefty = false
+    @AppStorage("handedness") private var handedness: Handedness = .right
     
     var body: some View {
         VStack {
             HStack {
                 Text("Handedness:")
-                Picker("Handednesss", selection: $lefty) {
-                    Text("left").tag(true)
-                    Text("right").tag(false)
+                Picker("Handednesss", selection: $handedness) {
+                    Text("left").tag(Handedness.left)
+                    Text("right").tag(Handedness.right)
                 }.pickerStyle(.segmented)
             }
         }.padding()
