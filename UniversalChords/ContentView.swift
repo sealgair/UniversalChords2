@@ -16,10 +16,9 @@ struct ContentView: View {
     @State private var seventhType: ChordSeventhType? = nil
     @State private var suspendedType: ChordSuspendedType? = nil
     
-    @State private var lefty = false
     
     let instruments = [
-        Instrument(name: "Guitar", strings: [
+        Instrument(name: String(localized:"instrument-guitar"), strings: [
             Pitch("E2"),
             Pitch("A2"),
             Pitch("D3"),
@@ -27,25 +26,31 @@ struct ContentView: View {
             Pitch("B3"),
             Pitch("E4"),
         ]),
-        Instrument(name: "Soprano Ukulele", strings: [
+        Instrument(name: String(localized:"instrument-uke"), strings: [
             Pitch("G4"),
             Pitch("C4"),
             Pitch("E4"),
             Pitch("A5"),
         ]),
-        Instrument(name: "Banjo", strings: [
+        Instrument(name: String(localized:"instrument-bari-uke"), strings: [
+            Pitch("D3"),
+            Pitch("G3"),
+            Pitch("B3"),
+            Pitch("E4"),
+        ]),
+        Instrument(name: String(localized:"instrument-banjo"), strings: [
             Pitch("D3"),
             Pitch("G3"),
             Pitch("B4"),
             Pitch("D4"),
         ]),
-        Instrument(name: "Mandolin", strings: [
+        Instrument(name: String(localized:"instrument-mando"), strings: [
             Pitch("G3"),
             Pitch("D4"),
             Pitch("A5"),
             Pitch("E5"),
         ]),
-        Instrument(name: "Bass", strings: [
+        Instrument(name: String(localized:"instrument-bass"), strings: [
             Pitch("E1"),
             Pitch("A1"),
             Pitch("D2"),
@@ -79,6 +84,7 @@ struct ContentView: View {
     
     var mainstuff: some View {
         VStack {
+            let none = String(localized: "chord-none")
             Text(chord.notation).font(.title)
                 .onTapGesture(count: 2) {
                     thirdType = .major
@@ -101,10 +107,10 @@ struct ContentView: View {
                 }.pickerStyle(.segmented)
                 
                 Picker(selection: $isSixth) {
-                    Text("⊘").tag(false)
-                    Text("6").tag(true)
+                    Text("chord-none").tag(false)
+                    Text("chord-6").tag(true)
                 } label: {
-                    Text("6th")
+                    Text("chord-6")
                 }.pickerStyle(.segmented)
                     .containerRelativeFrame(.horizontal) { size, axis in
                         return size * 0.2
@@ -113,13 +119,13 @@ struct ContentView: View {
             HStack {
                 Picker("7th", selection: $seventhType) {
                     ForEach(ChordSeventhType.optionalAll, id: \.?.rawValue) { chordType in
-                        Text(chordType?.label ?? "⊘").tag(chordType)
+                        Text(chordType?.label ?? none).tag(chordType)
                     }
                 }.pickerStyle(.segmented)
                 
                 Picker("Sus", selection: $suspendedType) {
                     ForEach(ChordSuspendedType.optionalAll, id: \.?.rawValue) { chordType in
-                        Text(chordType?.label ?? "⊘").tag(chordType as ChordSuspendedType?)
+                        Text(chordType?.label ?? none).tag(chordType as ChordSuspendedType?)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -139,7 +145,7 @@ struct ContentView: View {
                 }
                 Spacer()
                 NavigationLink {
-                    SettingsView().navigationTitle("Settings")
+                    SettingsView().navigationTitle("set-title")
                 } label: {
                     Image(systemName:"gearshape.fill").foregroundColor(Color(UIColor.systemGray))
                 }
@@ -150,5 +156,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView().environment(\.locale, .init(identifier: "es"))
 }

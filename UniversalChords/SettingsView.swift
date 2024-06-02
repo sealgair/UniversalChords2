@@ -20,17 +20,17 @@ struct SettingsView: View {
     var body: some View {
         Grid {
             GridRow {
-                Text("Handedness:")
-                Picker("Handednesss", selection: $handedness) {
-                    Text("Lefty").tag(Handedness.left)
-                    Text("Righty").tag(Handedness.right)
+                Text("set-hand-label")
+                Picker("set-hand-label", selection: $handedness) {
+                    Text("set-hand-left").tag(Handedness.left)
+                    Text("set-hand-right").tag(Handedness.right)
                 }.pickerStyle(.segmented)
             }
             GridRow {
-                Text("Accidentals:")
-                Picker("Accidentals", selection: $accidentals) {
-                    Text("Flat").tag(Accidental.flat)
-                    Text("Sharp").tag(Accidental.sharp)
+                Text("set-accidentals-label")
+                Picker("set-accidentals-label", selection: $accidentals) {
+                    Text("set-accidentals-flat").tag(Accidental.flat)
+                    Text("set-accidentals-sharp").tag(Accidental.sharp)
                 }.pickerStyle(.segmented)
             }
         }.padding()

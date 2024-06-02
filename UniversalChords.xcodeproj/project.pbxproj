@@ -11,6 +11,7 @@
 		ABE66A602C0BCFDF00D9C64A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABE66A5F2C0BCFDF00D9C64A /* Launch Screen.storyboard */; };
 		ABE66A622C0C049200D9C64A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE66A612C0C049200D9C64A /* SettingsView.swift */; };
 		ABE66A642C0C07ED00D9C64A /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE66A632C0C07ED00D9C64A /* ColorExtensions.swift */; };
+		ABE66A672C0C245E00D9C64A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABE66A652C0C245E00D9C64A /* Localizable.strings */; };
 		ABF779EF2BE713F100108EB2 /* UniversalChordsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF779EE2BE713F100108EB2 /* UniversalChordsApp.swift */; };
 		ABF779F12BE713F100108EB2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF779F02BE713F100108EB2 /* ContentView.swift */; };
 		ABF779F32BE713F200108EB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABF779F22BE713F200108EB2 /* Assets.xcassets */; };
@@ -47,6 +48,10 @@
 		ABE66A5F2C0BCFDF00D9C64A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		ABE66A612C0C049200D9C64A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ABE66A632C0C07ED00D9C64A /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		ABE66A662C0C245E00D9C64A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ABE66A682C0C24CE00D9C64A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ABE66A692C0C24CF00D9C64A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ABE66A6A2C0C2EA800D9C64A /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ABF779EB2BE713F100108EB2 /* UniversalChords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniversalChords.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF779EE2BE713F100108EB2 /* UniversalChordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalChordsApp.swift; sourceTree = "<group>"; };
 		ABF779F02BE713F100108EB2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,6 +97,7 @@
 		ABF779E22BE713F100108EB2 = {
 			isa = PBXGroup;
 			children = (
+				ABE66A652C0C245E00D9C64A /* Localizable.strings */,
 				ABE66A632C0C07ED00D9C64A /* ColorExtensions.swift */,
 				ABE66A5F2C0BCFDF00D9C64A /* Launch Screen.storyboard */,
 				ABF77A1E2BE727E600108EB2 /* MusicExtensions.swift */,
@@ -251,6 +257,9 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
+				fr,
+				"pt-BR",
 			);
 			mainGroup = ABF779E22BE713F100108EB2;
 			packageReferences = (
@@ -273,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABF779F72BE713F200108EB2 /* Preview Assets.xcassets in Resources */,
+				ABE66A672C0C245E00D9C64A /* Localizable.strings in Resources */,
 				ABF779F32BE713F200108EB2 /* Assets.xcassets in Resources */,
 				ABE66A602C0BCFDF00D9C64A /* Launch Screen.storyboard in Resources */,
 			);
@@ -341,6 +351,20 @@
 			targetProxy = ABF77A072BE713F300108EB2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ABE66A652C0C245E00D9C64A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABE66A662C0C245E00D9C64A /* en */,
+				ABE66A682C0C24CE00D9C64A /* fr */,
+				ABE66A692C0C24CF00D9C64A /* es */,
+				ABE66A6A2C0C2EA800D9C64A /* pt-BR */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		ABF77A0E2BE713F300108EB2 /* Debug */ = {

@@ -14,8 +14,8 @@ extension ChordThirdType: Identifiable {
     
     public var label: String {
         switch self {
-        case .major: return "Major"
-        case .minor: return "Minor"
+        case .major: return String(localized: "chord-major")
+        case .minor: return String(localized: "chord-minor")
         }
     }
 }
@@ -25,9 +25,9 @@ extension ChordFifthType: Identifiable {
     
     public var label: String {
       switch self {
-      case .perfect: return "⊘"
-      case .augmented: return "Aug"
-      case .diminished: return "Dim"
+      case .perfect: return String(localized: "chord-none")
+      case .augmented: return String(localized: "chord-aug")
+      case .diminished: return String(localized: "chord-dim")
       }
     }
 }
@@ -37,9 +37,9 @@ extension ChordSeventhType: Identifiable {
     
     public var label: String {
         switch self {
-        case .major: return "Maj7"
-        case .dominant: return "7"
-        case .diminished: return "Dim7"
+        case .major: return String(localized: "chord-maj7")
+        case .dominant: return String(localized: "chord-7")
+        case .diminished: return String(localized: "chord-dim7")
         }
     }
     
@@ -53,8 +53,8 @@ extension ChordSuspendedType: Identifiable {
     
     public var label: String {
         switch self {
-        case .sus2: return "Sus 2"
-        case .sus4: return "Sus 4"
+        case .sus2: return String(localized: "chord-sus2")
+        case .sus4: return String(localized: "chord-sus4")
         }
     }
     

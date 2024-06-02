@@ -1,0 +1,42 @@
+/*
+  Localizable.strings
+  UniversalChords
+
+  Created by Chase Caster on 6/1/24.
+  
+*/
+
+// Instruments
+"instrument-guitar" = "Guitare";
+"instrument-uke" = "Ukulélé Soprano";
+"instrument-bari-uke" = "Ukulélé Baryton";
+"instrument-banjo" = "Banjo";
+"instrument-mando" = "Mandoline";
+"instrument-bass" = "Basse";
+
+// Settings
+"set-title" = "Paramètres";
+"set-hand-label" = "Main:";
+"set-hand-left" = "Gaucher";
+"set-hand-right" = "Droitier";
+"set-accidentals-label" = "Altérations:";
+"set-accidentals-flat" = "Dièse";
+"set-accidentals-sharp" = "Bémol";
+
+// Chords
+"chord-major" = "Majeure";
+"chord-minor" = "Mineure";
+
+"chord-aug" = "Aug";
+"chord-dim" = "Dim";
+
+"chord-6" = "6";
+
+"chord-maj7" = "Maj 7";
+"chord-7" = "7";
+"chord-dim7" = "Dim 7";
+
+"chord-sus2" = "Sus 2";
+"chord-sus4" = "Sus 4";
+
+"chord-none" = "⊘";
