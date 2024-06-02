@@ -119,7 +119,6 @@ struct ContentView: View {
             }
             HStack {
                 FretBoardView(instrument: instrument, chord: chord)
-                .cornerRadius(20)
                 ChordPickerView(note: $note)
             }.frame(maxHeight: .infinity)
             

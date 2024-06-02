@@ -24,7 +24,7 @@ struct FretBoardView: View {
     var boardColor: Color { colorScheme == .dark ? darkBoardColor : lightBoardColor }
     var stringColor: Color { colorScheme == .dark ? darkStringColor : lightStringColor }
     
-    let fretCount: Int = 14
+    let fretCount: Int = 16
     let fretHeight: Int = 80
     let fingerSize: CGFloat = 40
     
@@ -37,26 +37,25 @@ struct FretBoardView: View {
     
     var stringNamesView: some View {
         GeometryReader() { geometry in
+            let width = (1/CGFloat(strings-1)) * geometry.size.width
             HStack(spacing: 0) {
-                let width = (1/CGFloat(strings+1)) * geometry.size.width
-                Text("").frame(width: width/2)
                 ForEach(instrument.strings, id: \.self) { string in
                     Text(string.key.description)
                     .font(.title2)
                     .frame(width: width)
                 }
-            }
+            }.offset(x: -width/2)
         }
     }
     
     var stringsView: some View {
         GeometryReader() { geometry in
             Path() { path in
-                for string in 1...strings {
-                    let s: CGFloat = CGFloat(string)/CGFloat(strings+1)
+                for string in 0...strings-1 {
+                    let s: CGFloat = CGFloat(string)/CGFloat(strings-1)
                     let x: Int = Int(s * geometry.size.width)
                     path.move(to: CGPoint(x:x, y: -10))
-                    path.addLine(to: CGPoint(x:x, y: fretHeight*(fretCount*2)))
+                    path.addLine(to: CGPoint(x:x, y: fretHeight*fretCount+20))
                 }
             }.stroke(stringColor, lineWidth: 3)
         }
@@ -65,9 +64,21 @@ struct FretBoardView: View {
     var fretNumbersView: some View {
         VStack(spacing: 0) {
             ForEach(0...fretCount, id: \.self) { i in
-                Text(String(i))
-                .frame(height: CGFloat(fretHeight))
-                .font(.title3)
+                HStack {
+                    Text(String(i))
+                    .frame(height: CGFloat(fretHeight))
+                    .font(.title3)
+                    VStack() {
+                        if ([3,5,7,9,12,15].contains(i)) {
+                            Circle().frame(width: 10, height: 10)
+                        } else {
+                            Circle().fill(.clear).frame(width: 10, height: 10)
+                        }
+                        if (i == 12) {
+                            Circle().frame(width: 10, height: 10)
+                        }
+                    }.offset(x: 5)
+                }
             }
         }.scrollTargetLayout()
     }
@@ -93,9 +104,9 @@ struct FretBoardView: View {
             let background: Color = colorScheme == .dark ? .white : .black
             let foreground: Color = colorScheme == .dark ? .black : .white
             ZStack {
-                let width = (1/CGFloat(strings+1)) * geometry.size.width
+                let width = (1/CGFloat(strings-1)) * geometry.size.width
                 ForEach(instrument.fingerings(chord: chord, position: (position ?? 0))) { finger in
-                    let s = CGFloat(instrument.strings.firstIndex(of: finger.string) ?? 0) + 1
+                    let s = CGFloat(instrument.strings.firstIndex(of: finger.string) ?? 0)
                     Text(finger.note.key.description)
                         .foregroundStyle(foreground)
                         .font(.title)
@@ -114,10 +125,11 @@ struct FretBoardView: View {
     var body: some View {
 //        Text(String(position!))
         ScrollView() {
+            let rightPad = fingerSize/2 + 10
             Grid() {
                 GridRow() {
                     Text("")
-                    stringNamesView
+                    stringNamesView.padding(.trailing, rightPad)
                 }
                 GridRow() {
                     fretNumbersView
@@ -126,11 +138,11 @@ struct FretBoardView: View {
                         stringsView
                         notesView
                     }.frame(height: CGFloat(fretCount * fretHeight))
+                    .background(boardColor)
+                    .padding(.trailing, rightPad)
                 }
             }
-            Spacer().frame(height: CGFloat(fretHeight))
         }
-        .background(boardColor)
         .scrollPosition(id: $position, anchor: .top)
         .scrollTargetBehavior(.viewAligned)
         .safeAreaPadding(.vertical, 40)
