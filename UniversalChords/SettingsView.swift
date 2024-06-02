@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MusicTheory
 
 enum Handedness: Int, Codable, CaseIterable {
     case left
@@ -14,14 +15,22 @@ enum Handedness: Int, Codable, CaseIterable {
 
 struct SettingsView: View {
     @AppStorage("handedness") private var handedness: Handedness = .right
+    @AppStorage("accidentals") private var accidentals: Accidental = .sharp
     
     var body: some View {
-        VStack {
-            HStack {
+        Grid {
+            GridRow {
                 Text("Handedness:")
                 Picker("Handednesss", selection: $handedness) {
-                    Text("left").tag(Handedness.left)
-                    Text("right").tag(Handedness.right)
+                    Text("Lefty").tag(Handedness.left)
+                    Text("Righty").tag(Handedness.right)
+                }.pickerStyle(.segmented)
+            }
+            GridRow {
+                Text("Accidentals:")
+                Picker("Accidentals", selection: $accidentals) {
+                    Text("Flat").tag(Accidental.flat)
+                    Text("Sharp").tag(Accidental.sharp)
                 }.pickerStyle(.segmented)
             }
         }.padding()

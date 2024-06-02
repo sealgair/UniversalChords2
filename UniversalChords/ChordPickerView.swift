@@ -11,12 +11,20 @@ import MusicTheory
 struct ChordPickerView: View {
     @Binding var note: Key
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("accidentals") private var accidentals: Accidental = .sharp
+    
+    var allKeys: Array<Key> {
+        switch (accidentals) {
+        case .flat: Key.keysWithFlats
+        default: Key.keysWithSharps
+        }
+    }
     
     var body: some View {
         let background: Color = colorScheme == .dark ? .black : .white
         let foreground: Color = colorScheme == .dark ? .white : .black
         VStack(spacing: -1) {
-            ForEach(Key.keysWithSharps) { aNote in
+            ForEach(allKeys) { aNote in
                 let selected = aNote == note
                 Text(aNote.description)
                     .padding(10)

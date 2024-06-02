@@ -75,6 +75,16 @@ extension Key: Identifiable {
         }
         return dist
     }
+    
+    var flat: Key {
+        guard let sharpId = Key.keysWithSharps.firstIndex(of: self) else { return self }
+        return Key.keysWithFlats[sharpId]
+    }
+    
+    var sharp: Key {
+        guard let flatId = Key.keysWithFlats.firstIndex(of: self) else { return self }
+        return Key.keysWithSharps[flatId]
+    }
 }
 
 extension Pitch: Hashable {
