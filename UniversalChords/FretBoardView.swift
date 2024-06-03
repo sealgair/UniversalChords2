@@ -40,8 +40,8 @@ struct FretBoardView: View {
     var chord: Chord
     @State var position: Int? = 0
     @Environment(\.colorScheme) var colorScheme
-    @AppStorage("handedness") private var handedness: Handedness = .right
-    @AppStorage("accidentals") private var accidentals: Accidental = .sharp
+    @AppStorage(kStoredHandedness) private var handedness: Handedness = .right
+    @AppStorage(kStoredAccidentals) private var accidentals: Accidental = .sharp
     
     var stringNamesView: some View {
         GeometryReader() { geometry in
@@ -116,16 +116,18 @@ struct FretBoardView: View {
                 ForEach(instrument.fingerings(chord: chord, position: (position ?? 0))) { finger in
                     let s = CGFloat(orderedStrings.firstIndex(of: finger.string) ?? 0)
                     let key = accidentals == .flat ? finger.note.key.flat : finger.note.key.sharp
-                    Text(key.description)
-                        .foregroundStyle(foreground)
-                        .font(.title)
-                        .background(alignment: .center) {
-                            Circle()
-                            .fill(background)
-                            .frame(width: fingerSize, height: fingerSize)
-                        }
-                        .position(x: width * s,
-                                y: CGFloat(finger.position * fretHeight))
+                    if (finger.position <= fretCount) {
+                        Text(key.description)
+                            .foregroundStyle(foreground)
+                            .font(.title)
+                            .background(alignment: .center) {
+                                Circle()
+                                .fill(background)
+                                .frame(width: fingerSize, height: fingerSize)
+                            }
+                            .position(x: width * s,
+                                    y: CGFloat(finger.position * fretHeight))
+                    }
                 }
             }
         }
@@ -133,25 +135,27 @@ struct FretBoardView: View {
     
     var body: some View {
 //        Text(String(position!))
-        ScrollView() {
-            let rightPad = fingerSize/2 + 10
-            Grid() {
-                GridRow() {
-                    Text("")
-                    stringNamesView.padding(.trailing, rightPad)
+        GeometryReader() { geometry in
+            ScrollView() {
+                let rightPad = fingerSize/2 + 10
+                Grid() {
+                    GridRow() {
+                        Text("")
+                        stringNamesView.padding(.trailing, rightPad)
+                    }
+                    GridRow() {
+                        fretNumbersView
+                        ZStack() {
+                            fretsView
+                            stringsView
+                            notesView
+                        }.frame(height: CGFloat((fretCount) * fretHeight))
+                        .background(boardColor)
+                        .padding(.trailing, rightPad)
+                    }
                 }
-                GridRow() {
-                    fretNumbersView
-                    ZStack() {
-                        fretsView
-                        stringsView
-                        notesView
-                    }.frame(height: CGFloat((fretCount) * fretHeight))
-                    .background(boardColor)
-                    .padding(.trailing, rightPad)
-                }
+                Spacer().frame(height: geometry.size.height - CGFloat(fretHeight*5))
             }
-            Spacer().frame(height: CGFloat(fretHeight))
         }
         .scrollPosition(id: $position, anchor: .top)
         .scrollTargetBehavior(.viewAligned)

@@ -14,8 +14,8 @@ enum Handedness: Int, Codable, CaseIterable {
 }
 
 struct SettingsView: View {
-    @AppStorage("handedness") private var handedness: Handedness = .right
-    @AppStorage("accidentals") private var accidentals: Accidental = .sharp
+    @AppStorage(kStoredHandedness) private var handedness: Handedness = .right
+    @AppStorage(kStoredAccidentals) private var accidentals: Accidental = .sharp
     
     var body: some View {
         Grid {

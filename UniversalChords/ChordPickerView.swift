@@ -11,7 +11,7 @@ import MusicTheory
 struct ChordPickerView: View {
     @Binding var note: Key
     @Environment(\.colorScheme) var colorScheme
-    @AppStorage("accidentals") private var accidentals: Accidental = .sharp
+    @AppStorage(kStoredAccidentals) private var accidentals: Accidental = .sharp
     
     var allKeys: Array<Key> {
         switch (accidentals) {

@@ -8,6 +8,10 @@
 import SwiftUI
 import MusicTheory
 
+let kStoredHandedness = "handedness"
+let kStoredAccidentals = "accidentals"
+let kStoredInstrument = "instrument"
+
 struct ContentView: View {
     @State private var note = Key("c")
     @State private var thirdType = ChordThirdType.major
@@ -57,10 +61,13 @@ struct ContentView: View {
             Pitch("G2"),
         ]),
     ]
-    @State private var instrument: Instrument
-    
-    init() {
-        instrument = instruments[0]
+    @AppStorage(kStoredInstrument) private var instrumentName: String = String(localized:"instrument-guitar")
+    public var instrument: Instrument {
+        get {
+            instruments.first { i in
+                i.name == instrumentName
+            } ?? instruments[0]
+        }
     }
     
     private var chordType: ChordType {
@@ -78,11 +85,11 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            mainstuff
+            navigationRoot
         }
     }
     
-    var mainstuff: some View {
+    var navigationRoot: some View {
         VStack {
             let none = String(localized: "chord-none")
             Text(chord.notation).font(.title)
@@ -133,14 +140,15 @@ struct ContentView: View {
             }
             HStack {
                 FretBoardView(instrument: instrument, chord: chord)
+                    .frame(maxWidth: 400)
                 ChordPickerView(note: $note)
             }.frame(maxHeight: .infinity)
             
             HStack {
                 Spacer()
-                Picker("Instruments", selection: $instrument) {
+                Picker("Instruments", selection: $instrumentName) {
                     ForEach(instruments) { choice in
-                        Text(choice.name).tag(choice)
+                        Text(choice.name).tag(choice.name)
                     }
                 }
                 Spacer()

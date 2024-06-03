@@ -52,6 +52,7 @@
 		ABE66A682C0C24CE00D9C64A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABE66A692C0C24CF00D9C64A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABE66A6A2C0C2EA800D9C64A /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		ABE66A6B2C0C303800D9C64A /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF779EB2BE713F100108EB2 /* UniversalChords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniversalChords.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF779EE2BE713F100108EB2 /* UniversalChordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalChordsApp.swift; sourceTree = "<group>"; };
 		ABF779F02BE713F100108EB2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -260,6 +261,7 @@
 				es,
 				fr,
 				"pt-BR",
+				nb,
 			);
 			mainGroup = ABF779E22BE713F100108EB2;
 			packageReferences = (
@@ -360,6 +362,7 @@
 				ABE66A682C0C24CE00D9C64A /* fr */,
 				ABE66A692C0C24CF00D9C64A /* es */,
 				ABE66A6A2C0C2EA800D9C64A /* pt-BR */,
+				ABE66A6B2C0C303800D9C64A /* nb */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

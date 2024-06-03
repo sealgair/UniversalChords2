@@ -22,7 +22,7 @@ typealias Fingering = Array<Finger>
 
 let fingerCache = NSCache<NSString, AnyObject>()
 
-struct Instrument: Identifiable, Hashable {
+struct Instrument: Identifiable, Hashable, Codable {
     let name: String
     let strings: [Pitch]
     var id: String { self.name }
