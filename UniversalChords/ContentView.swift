@@ -13,6 +13,8 @@ let kStoredAccidentals = "accidentals"
 let kStoredInstrument = "instrument"
 
 struct ContentView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     @State private var note = Key("c")
     @State private var thirdType = ChordThirdType.major
     @State private var fifthType = ChordFifthType.perfect
@@ -20,6 +22,15 @@ struct ContentView: View {
     @State private var seventhType: ChordSeventhType? = nil
     @State private var suspendedType: ChordSuspendedType? = nil
     
+    @AppStorage(kStoredInstrument) private var instrumentName: String = String(localized:"instrument-guitar")
+    
+    private var foregroundColor: Color {
+        return colorScheme == .light ? .white : .black
+    }
+    
+    private var backgroudColor: Color {
+        return colorScheme == .light ? .black : .white
+    }
     
     let instruments = [
         Instrument(name: String(localized:"instrument-guitar"), strings: [
@@ -61,7 +72,6 @@ struct ContentView: View {
             Pitch("G2"),
         ]),
     ]
-    @AppStorage(kStoredInstrument) private var instrumentName: String = String(localized:"instrument-guitar")
     public var instrument: Instrument {
         get {
             instruments.first { i in
@@ -109,6 +119,18 @@ struct ContentView: View {
                     seventhType = nil
                     suspendedType = nil
                 }
+            HStack {
+                ForEach(chord.keys) { key in
+                    Text(key.description)
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundStyle(foregroundColor)
+                        .background(alignment: .center) {
+                            Circle()
+                            .fill(backgroudColor)
+                            .frame(width: 18, height: 18)
+                        }.frame(width: 18)
+                }
+            }
             HStack {
                 Picker("Chord Third Type", selection: $thirdType) {
                     ForEach(ChordThirdType.all) { chordType in
