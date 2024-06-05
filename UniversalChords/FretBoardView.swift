@@ -8,6 +8,13 @@
 import SwiftUI
 import MusicTheory
 
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGPoint = .zero
+    
+    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
+    }
+}
+
 struct FretBoardView: View {
     let darkNutColor = Color(r: 255, g: 255, b: 240)
     let darkFretColor =  Color(r: 137, g: 148, b: 153)
@@ -88,7 +95,7 @@ struct FretBoardView: View {
                     }.offset(x: 5)
                 }
             }
-        }.scrollTargetLayout()
+        }
     }
     
     var fretsView: some View {
@@ -134,32 +141,64 @@ struct FretBoardView: View {
     }
     
     var body: some View {
-//        Text(String(position!))
-        GeometryReader() { geometry in
-            ScrollView() {
-                let rightPad = fingerSize/2 + 10
-                Grid() {
-                    GridRow() {
-                        Text("")
-                        stringNamesView.padding(.trailing, rightPad)
-                    }
-                    GridRow() {
-                        fretNumbersView
-                        ZStack() {
-                            fretsView
-                            stringsView
-                            notesView
-                        }.frame(height: CGFloat((fretCount) * fretHeight))
-                        .background(boardColor)
-                        .padding(.trailing, rightPad)
-                    }
-                }
-                Spacer().frame(height: geometry.size.height - CGFloat(fretHeight*5))
+        VStack() {
+//            Text("\(position!)")
+            if #available(iOS 17.0, *) {
+                // new style position tracking
+                fretScroll
+                    .scrollPosition(id: $position, anchor: .top)
+                    .scrollTargetBehavior(.viewAligned)
+                    .safeAreaPadding(.vertical, 40)
+            } else {
+                fretScroll
             }
         }
-        .scrollPosition(id: $position, anchor: .top)
-        .scrollTargetBehavior(.viewAligned)
-        .safeAreaPadding(.vertical, 40)
+    }
+    
+    var fretScroll: some View {
+        GeometryReader() { geometry in
+            ScrollView() {
+                
+                if #available(iOS 17.0, *) {
+                    fretContent
+                } else {
+                    // old style position tracking
+                    fretContent
+                    .background(GeometryReader { geometry in
+                        Color.clear
+                            .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("fretboardScroll")).origin)
+                    })
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                        self.position = -Int(value.y/CGFloat(fretHeight))
+                    }
+                }
+                Spacer().frame(height: max(geometry.size.height - CGFloat(fretHeight*5), CGFloat(fretHeight)))
+            }.coordinateSpace(name: "fretboardScroll")
+        }
+    }
+    
+    var fretContent: some View {
+        Grid() {
+            let rightPad = fingerSize/2 + 10
+            GridRow() {
+                Text("")
+                stringNamesView.padding(.trailing, rightPad)
+            }
+            GridRow() {
+                if #available(iOS 17.0, *) {
+                    fretNumbersView.scrollTargetLayout()
+                } else {
+                    fretNumbersView
+                }
+                ZStack() {
+                    fretsView
+                    stringsView
+                    notesView
+                }.frame(height: CGFloat((fretCount) * fretHeight))
+                    .background(boardColor)
+                    .padding(.trailing, rightPad)
+            }
+        }
     }
 }
 

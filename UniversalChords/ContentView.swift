@@ -89,6 +89,15 @@ struct ContentView: View {
         }
     }
     
+    var sixPicker: some View {
+        Picker(selection: $isSixth) {
+            Text("chord-none").tag(false)
+            Text("chord-6").tag(true)
+        } label: {
+            Text("chord-6")
+        }.pickerStyle(.segmented)
+    }
+    
     var navigationRoot: some View {
         VStack {
             let none = String(localized: "chord-none")
@@ -113,15 +122,14 @@ struct ContentView: View {
                     }
                 }.pickerStyle(.segmented)
                 
-                Picker(selection: $isSixth) {
-                    Text("chord-none").tag(false)
-                    Text("chord-6").tag(true)
-                } label: {
-                    Text("chord-6")
-                }.pickerStyle(.segmented)
-                    .containerRelativeFrame(.horizontal) { size, axis in
-                        return size * 0.2
-                    }
+                if #available(iOS 17.0, *) {
+                    sixPicker
+                        .containerRelativeFrame(.horizontal) { size, axis in
+                            return size * 0.2
+                        }
+                } else {
+                    sixPicker
+                }
             }
             HStack {
                 Picker("7th", selection: $seventhType) {
