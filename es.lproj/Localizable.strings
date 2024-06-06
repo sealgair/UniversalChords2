@@ -13,6 +13,13 @@
 "instrument-banjo" = "Banjo";
 "instrument-mando" = "Mandolina";
 "instrument-bass" = "Bajo";
+"instrument-violin" = "Violín";
+"instrument-viola" = "Viola";
+"instrument-cello" = "Violonchelo";
+"instrument-dulcimer-daa" = "Dulcimer (DAA)";
+"instrument-dulcimer-dad" = "Dulcimer (DAD)";
+"instrument-lute" = "Laúd";
+"instrument-balalaika" = "Balalaica";
 
 // Settings
 "set-title" = "Configuración";

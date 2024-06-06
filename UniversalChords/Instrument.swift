@@ -9,7 +9,7 @@ import Foundation
 import MusicTheory
 
 
-struct Finger: Identifiable {
+struct Finger: Identifiable, Hashable {
     let position: Int
     let string: Pitch
     var note: Pitch {

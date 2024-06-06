@@ -120,8 +120,8 @@ struct FretBoardView: View {
             let foreground: Color = colorScheme == .dark ? .black : .white
             ZStack {
                 let width = (1/CGFloat(stringCount-1)) * geometry.size.width
-                ForEach(instrument.fingerings(chord: chord, position: (position ?? 0))) { finger in
-                    let s = CGFloat(orderedStrings.firstIndex(of: finger.string) ?? 0)
+                let fingerings = instrument.fingerings(chord: chord, position: (position ?? 0))
+                ForEach(Array(zip(fingerings, fingerings.indices)), id: \.1) { finger, s in
                     let key = accidentals == .flat ? finger.note.key.flat : finger.note.key.sharp
                     if (finger.position <= fretCount) {
                         Text(key.description)
@@ -132,7 +132,7 @@ struct FretBoardView: View {
                                 .fill(background)
                                 .frame(width: fingerSize, height: fingerSize)
                             }
-                            .position(x: width * s,
+                            .position(x: width * CGFloat(s),
                                     y: CGFloat(finger.position * fretHeight))
                     }
                 }
@@ -204,13 +204,10 @@ struct FretBoardView: View {
 
 #Preview {
     FretBoardView(
-        instrument: Instrument(name: "Guitar", strings: [
-            Pitch("E2"),
-            Pitch("A2"),
-            Pitch("D3"),
-            Pitch("G3"),
-            Pitch("B3"),
+        instrument: Instrument(name: "Test", strings: [
             Pitch("E4"),
+            Pitch("E4"),
+            Pitch("A4"),
         ]),
         chord: Chord(type: ChordType(third: .major), key: Key("C"))
     )

@@ -71,6 +71,47 @@ struct ContentView: View {
             Pitch("D2"),
             Pitch("G2"),
         ]),
+        Instrument(name: String(localized:"instrument-violin"), strings: [
+            Pitch("G3"),
+            Pitch("D4"),
+            Pitch("A5"),
+            Pitch("E5"),
+        ]),
+        Instrument(name: String(localized:"instrument-viola"), strings: [
+            Pitch("C3"),
+            Pitch("G3"),
+            Pitch("D4"),
+            Pitch("A5"),
+        ]),
+        Instrument(name: String(localized:"instrument-cello"), strings: [
+            Pitch("C2"),
+            Pitch("G2"),
+            Pitch("D3"),
+            Pitch("A4"),
+        ]),
+        Instrument(name: String(localized:"instrument-dulcimer-daa"), strings: [
+            Pitch("A4"),
+            Pitch("A4"),
+            Pitch("D3"),
+        ]),
+        Instrument(name: String(localized:"instrument-dulcimer-dad"), strings: [
+            Pitch("D4"),
+            Pitch("A4"),
+            Pitch("D3"),
+        ]),
+        Instrument(name: String(localized:"instrument-lute"), strings: [
+            Pitch("E2"),
+            Pitch("A2"),
+            Pitch("D3"),
+            Pitch("F#3"),
+            Pitch("B3"),
+            Pitch("E4"),
+        ]),
+        Instrument(name: String(localized:"instrument-balalaika"), strings: [
+            Pitch("E4"),
+            Pitch("E4"),
+            Pitch("A4"),
+        ]),
     ]
     public var instrument: Instrument {
         get {
