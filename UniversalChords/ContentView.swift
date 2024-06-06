@@ -92,6 +92,12 @@ struct ContentView: View {
     private var chord: Chord {
         return Chord(type: chordType, key: note)
     }
+    private var noteCount: Int {
+        chord.keys.count
+    }
+    private var stringCount: Int {
+        instrument.strings.count
+    }
     
     var body: some View {
         NavigationStack {
@@ -106,6 +112,7 @@ struct ContentView: View {
         } label: {
             Text("chord-6")
         }.pickerStyle(.segmented)
+            .disabled(!isSixth && noteCount >= stringCount)
     }
     
     var navigationRoot: some View {
@@ -159,6 +166,7 @@ struct ContentView: View {
                         Text(chordType?.label ?? none).tag(chordType)
                     }
                 }.pickerStyle(.segmented)
+                    .disabled(seventhType == nil && noteCount >= stringCount)
                 
                 Picker("Sus", selection: $suspendedType) {
                     ForEach(ChordSuspendedType.optionalAll, id: \.?.rawValue) { chordType in
@@ -166,6 +174,7 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(.segmented)
+                .disabled(suspendedType == nil && noteCount >= stringCount)
 
             }
             HStack {
@@ -179,6 +188,12 @@ struct ContentView: View {
                 Picker("Instruments", selection: $instrumentName) {
                     ForEach(instruments) { choice in
                         Text(choice.name).tag(choice.name)
+                    }
+                }.onChange(of: instrumentName) { val in
+                    if(noteCount > stringCount) {
+                        isSixth = false
+                        seventhType = nil
+                        suspendedType = nil
                     }
                 }
                 Spacer()
