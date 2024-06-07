@@ -121,6 +121,16 @@ struct FretBoardView: View {
             ZStack {
                 let width = (1/CGFloat(stringCount-1)) * geometry.size.width
                 let fingerings = instrument.fingerings(chord: chord, position: (position ?? 0))
+                //barre
+                if let minPos = fingerings.map({ $0.position }).min() {
+                    if minPos > 0 && fingerings.filter({ $0.position == minPos }).count > 1 {
+                        RoundedRectangle(cornerRadius: fingerSize/2)
+                            .fill(background)
+                            .frame(width: geometry.size.width+fingerSize, height: fingerSize)
+                            .position(x: geometry.size.width/2, y: CGFloat(minPos * fretHeight))
+                    }
+                }
+                
                 ForEach(Array(zip(fingerings, fingerings.indices)), id: \.1) { finger, s in
                     let key = accidentals == .flat ? finger.note.key.flat : finger.note.key.sharp
                     if (finger.position <= fretCount) {
@@ -205,9 +215,12 @@ struct FretBoardView: View {
 #Preview {
     FretBoardView(
         instrument: Instrument(name: "Test", strings: [
+            Pitch("E2"),
+            Pitch("A2"),
+            Pitch("D3"),
+            Pitch("G3"),
+            Pitch("B3"),
             Pitch("E4"),
-            Pitch("E4"),
-            Pitch("A4"),
         ]),
         chord: Chord(type: ChordType(third: .major), key: Key("C"))
     )
