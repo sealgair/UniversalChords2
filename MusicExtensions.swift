@@ -76,6 +76,27 @@ extension Key: Identifiable {
         return dist
     }
     
+    func to(accidental: Accidental) -> Key {
+        switch (accidental) {
+        case .natural: natural
+        case .flat: flat
+        case .sharp: sharp
+        default: self  // TODO: Double flats and sharps I guess
+        }
+    }
+    
+    func wholeDistance(to: Key) -> Int {
+        var dist = type.distance(from: to.type)
+        while dist < 0 {
+            dist += 7
+        }
+        return dist
+    }
+    
+    var natural: Key {
+        return Key(type: type)
+    }
+    
     var flat: Key {
         guard let sharpId = Key.keysWithSharps.firstIndex(of: self) else { return self }
         return Key.keysWithFlats[sharpId]
@@ -87,7 +108,8 @@ extension Key: Identifiable {
     }
 }
 
-extension Pitch: Hashable {
+extension Pitch: Hashable, Identifiable {
+    public var id: Int { rawValue }
     func add(semitones: Int) -> Pitch? {
         return Pitch(rawValue: self.rawValue + semitones)
     }

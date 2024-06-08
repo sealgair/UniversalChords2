@@ -16,6 +16,14 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
 }
 
 struct FretBoardView: View {
+    @State var position: Int? = 0
+    @Environment(\.colorScheme) var colorScheme
+    @AppStorage(kStoredHandedness) private var handedness: Handedness = .right
+    @AppStorage(kStoredAccidentals) private var accidentals: Accidental = .sharp
+    
+    var instrument: StringedInstrument
+    var chord: Chord
+    
     let darkNutColor = Color(r: 255, g: 255, b: 240)
     let darkFretColor =  Color(r: 137, g: 148, b: 153)
     let darkBoardColor = Color(r: 50, g: 0, b: 5)
@@ -35,7 +43,6 @@ struct FretBoardView: View {
     let fretHeight: Int = 80
     let fingerSize: CGFloat = 40
     
-    var instrument: Instrument
     var stringCount: Int { instrument.strings.count }
     var orderedStrings: Array<Pitch> {
         switch(handedness) {
@@ -43,12 +50,6 @@ struct FretBoardView: View {
         case .left:instrument.strings.reversed()
         }
     }
-    
-    var chord: Chord
-    @State var position: Int? = 0
-    @Environment(\.colorScheme) var colorScheme
-    @AppStorage(kStoredHandedness) private var handedness: Handedness = .right
-    @AppStorage(kStoredAccidentals) private var accidentals: Accidental = .sharp
     
     var stringNamesView: some View {
         GeometryReader() { geometry in
@@ -132,7 +133,7 @@ struct FretBoardView: View {
                 }
                 
                 ForEach(Array(zip(fingerings, fingerings.indices)), id: \.1) { finger, s in
-                    let key = accidentals == .flat ? finger.note.key.flat : finger.note.key.sharp
+                    let key = finger.note.key.to(accidental: accidentals)
                     if (finger.position <= fretCount) {
                         Text(key.description)
                             .foregroundStyle(foreground)
@@ -168,7 +169,6 @@ struct FretBoardView: View {
     var fretScroll: some View {
         GeometryReader() { geometry in
             ScrollView() {
-                
                 if #available(iOS 17.0, *) {
                     fretContent
                 } else {
@@ -214,7 +214,7 @@ struct FretBoardView: View {
 
 #Preview {
     FretBoardView(
-        instrument: Instrument(name: "Test", strings: [
+        instrument: StringedInstrument(name: "Test", strings: [
             Pitch("E2"),
             Pitch("A2"),
             Pitch("D3"),

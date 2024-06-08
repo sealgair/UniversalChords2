@@ -54,10 +54,38 @@ extension Fingering {
 
 let fingerCache = NSCache<NSString, AnyObject>()
 
-struct Instrument: Identifiable, Hashable, Codable {
+class Instrument: Identifiable, Hashable, Codable {
+    
     let name: String
-    let strings: [Pitch]
     var id: String { self.name }
+    var stringCount: Int { 0 }
+    
+    init (name: String) {
+        self.name = name
+    }
+    
+    static func == (lhs: Instrument, rhs: Instrument) -> Bool {
+        return lhs.name == rhs.name
+    }    
+    
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(id)
+    }
+}
+
+class StringedInstrument: Instrument {
+    
+    let strings: [Pitch]
+    override var stringCount: Int { strings.count }
+    
+    init(name: String, strings: [Pitch]) {
+        self.strings = strings
+        super.init(name: name)
+    }
+    
+    required init(from decoder: any Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
     
     func fingerings(chord: Chord, position: Int) -> Fingering {
         var fingering = Fingering()
@@ -84,4 +112,9 @@ struct Instrument: Identifiable, Hashable, Codable {
         }
         return fingering
     }
+}
+
+
+class Piano: Instrument {
+    override var stringCount: Int { 88 }
 }

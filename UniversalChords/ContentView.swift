@@ -32,8 +32,8 @@ struct ContentView: View {
         return colorScheme == .light ? .black : .white
     }
     
-    let instruments = [
-        Instrument(name: String(localized:"instrument-guitar"), strings: [
+    let instruments: Array<Instrument> = [
+        StringedInstrument(name: String(localized:"instrument-guitar"), strings: [
             Pitch("E2"),
             Pitch("A2"),
             Pitch("D3"),
@@ -41,65 +41,65 @@ struct ContentView: View {
             Pitch("B3"),
             Pitch("E4"),
         ]),
-        Instrument(name: String(localized:"instrument-uke"), strings: [
+        StringedInstrument(name: String(localized:"instrument-uke"), strings: [
             Pitch("G4"),
             Pitch("C4"),
             Pitch("E4"),
             Pitch("A5"),
         ]),
-        Instrument(name: String(localized:"instrument-bari-uke"), strings: [
+        StringedInstrument(name: String(localized:"instrument-bari-uke"), strings: [
             Pitch("D3"),
             Pitch("G3"),
             Pitch("B3"),
             Pitch("E4"),
         ]),
-        Instrument(name: String(localized:"instrument-banjo"), strings: [
+        StringedInstrument(name: String(localized:"instrument-banjo"), strings: [
             Pitch("D3"),
             Pitch("G3"),
             Pitch("B4"),
             Pitch("D4"),
         ]),
-        Instrument(name: String(localized:"instrument-mando"), strings: [
+        StringedInstrument(name: String(localized:"instrument-mando"), strings: [
             Pitch("G3"),
             Pitch("D4"),
             Pitch("A5"),
             Pitch("E5"),
         ]),
-        Instrument(name: String(localized:"instrument-bass"), strings: [
+        StringedInstrument(name: String(localized:"instrument-bass"), strings: [
             Pitch("E1"),
             Pitch("A1"),
             Pitch("D2"),
             Pitch("G2"),
         ]),
-        Instrument(name: String(localized:"instrument-violin"), strings: [
+        StringedInstrument(name: String(localized:"instrument-violin"), strings: [
             Pitch("G3"),
             Pitch("D4"),
             Pitch("A5"),
             Pitch("E5"),
         ]),
-        Instrument(name: String(localized:"instrument-viola"), strings: [
+        StringedInstrument(name: String(localized:"instrument-viola"), strings: [
             Pitch("C3"),
             Pitch("G3"),
             Pitch("D4"),
             Pitch("A5"),
         ]),
-        Instrument(name: String(localized:"instrument-cello"), strings: [
+        StringedInstrument(name: String(localized:"instrument-cello"), strings: [
             Pitch("C2"),
             Pitch("G2"),
             Pitch("D3"),
             Pitch("A4"),
         ]),
-        Instrument(name: String(localized:"instrument-dulcimer-daa"), strings: [
+        StringedInstrument(name: String(localized:"instrument-dulcimer-daa"), strings: [
             Pitch("A4"),
             Pitch("A4"),
             Pitch("D3"),
         ]),
-        Instrument(name: String(localized:"instrument-dulcimer-dad"), strings: [
+        StringedInstrument(name: String(localized:"instrument-dulcimer-dad"), strings: [
             Pitch("D4"),
             Pitch("A4"),
             Pitch("D3"),
         ]),
-        Instrument(name: String(localized:"instrument-lute"), strings: [
+        StringedInstrument(name: String(localized:"instrument-lute"), strings: [
             Pitch("E2"),
             Pitch("A2"),
             Pitch("D3"),
@@ -107,11 +107,12 @@ struct ContentView: View {
             Pitch("B3"),
             Pitch("E4"),
         ]),
-        Instrument(name: String(localized:"instrument-balalaika"), strings: [
+        StringedInstrument(name: String(localized:"instrument-balalaika"), strings: [
             Pitch("E4"),
             Pitch("E4"),
             Pitch("A4"),
         ]),
+        Piano(name: String(localized: "instrument-piano")),
     ]
     public var instrument: Instrument {
         get {
@@ -137,7 +138,7 @@ struct ContentView: View {
         chord.keys.count
     }
     private var stringCount: Int {
-        instrument.strings.count
+        instrument.stringCount
     }
     
     var body: some View {
@@ -219,8 +220,13 @@ struct ContentView: View {
 
             }
             HStack {
-                FretBoardView(instrument: instrument, chord: chord)
-                    .frame(maxWidth: 400)
+                if let instrument = instrument as? StringedInstrument {
+                    FretBoardView(instrument: instrument, chord: chord)
+                        .frame(maxWidth: 400)
+                } else {
+                    KeyboardView(chord: chord)
+                        .frame(maxWidth: 600)
+                }
                 ChordPickerView(note: $note)
             }.frame(maxHeight: .infinity)
             
