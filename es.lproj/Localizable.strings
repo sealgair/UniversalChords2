@@ -20,6 +20,7 @@
 "instrument-dulcimer-dad" = "Dulcimer (DAD)";
 "instrument-lute" = "Laúd";
 "instrument-balalaika" = "Balalaica";
+"instrument-piano" = "Piano";
 
 // Settings
 "set-title" = "Configuración";

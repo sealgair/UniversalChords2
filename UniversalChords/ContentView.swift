@@ -14,6 +14,8 @@ let kStoredInstrument = "instrument"
 
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage(kStoredHandedness) private var handedness: Handedness = .right
+    @AppStorage(kStoredAccidentals) private var accidentals: Accidental = .sharp
     
     @State private var note = Key("c")
     @State private var thirdType = ChordThirdType.major
@@ -221,11 +223,18 @@ struct ContentView: View {
             }
             HStack {
                 if let instrument = instrument as? StringedInstrument {
-                    FretBoardView(instrument: instrument, chord: chord)
-                        .frame(maxWidth: 400)
+                    FretBoardView(
+                        handedness: handedness,
+                        accidentals: accidentals,
+                        instrument: instrument, 
+                        chord: chord
+                    ).frame(maxWidth: 400)
                 } else {
-                    KeyboardView(chord: chord)
-                        .frame(maxWidth: 600)
+                    KeyboardView(
+                        handedness: handedness,
+                        accidentals: accidentals,
+                        chord: chord
+                    ).frame(maxWidth: 500)
                 }
                 ChordPickerView(note: $note)
             }.frame(maxHeight: .infinity)

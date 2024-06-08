@@ -18,8 +18,8 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
 struct FretBoardView: View {
     @State var position: Int? = 0
     @Environment(\.colorScheme) var colorScheme
-    @AppStorage(kStoredHandedness) private var handedness: Handedness = .right
-    @AppStorage(kStoredAccidentals) private var accidentals: Accidental = .sharp
+    var handedness: Handedness = .right
+    var accidentals: Accidental = .sharp
     
     var instrument: StringedInstrument
     var chord: Chord

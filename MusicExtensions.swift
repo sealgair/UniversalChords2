@@ -113,4 +113,18 @@ extension Pitch: Hashable, Identifiable {
     func add(semitones: Int) -> Pitch? {
         return Pitch(rawValue: self.rawValue + semitones)
     }
+    
+    func wholeDistance(to: Pitch) -> Int {
+        var distance = 0
+        for rv in rawValue ... to.rawValue {
+            if rv != rawValue && Pitch(rawValue: rv)?.key.accidental == .natural {
+                distance += 1
+            }
+        }
+        return distance
+    }
+    
+    func nextPitch(inKey: Key) -> Pitch? {
+        return Pitch(rawValue: rawValue + key.distance(to: inKey))
+    }
 }
