@@ -14,8 +14,8 @@ struct KeyboardView: View {
     
     var chord: Chord
     
-    let whiteKeyHeight: CGFloat = 70
-    let blackKeyHeight: CGFloat = 55
+    let whiteKeyHeight: CGFloat = 60
+    let blackKeyHeight: CGFloat = 50
     let fingerSize: CGFloat = 40
     let keyCount = 88
     
@@ -28,7 +28,7 @@ struct KeyboardView: View {
         handedness == .left ? lowestNote : highestNote
     }
     var topNote: Pitch {
-        return position ?? baseNote
+        return position ?? Pitch(rawValue: Pitch(stringLiteral: "C4").rawValue + ((handedness == .right) ? 8 : -4))!
     }
     var notes: Array<Pitch> {
         let notes = (0..<keyCount).map({Pitch(rawValue: lowestNote.rawValue + $0)!})
@@ -82,6 +82,7 @@ struct KeyboardView: View {
                 let background = Color.black
                 ForEach(chord.keys, id: \.self) { key in
                     Text(key.to(accidental: accidentals).description)
+                        .frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(key.isNatural ? foreground : background)
                         .font(.title)
                         .background(alignment: .center) {
@@ -92,7 +93,7 @@ struct KeyboardView: View {
                         .position(notePosition(key: key, width: geometry.size.width))
                 }
             }
-        }.offset(y: whiteKeyHeight/2+4)
+        }.offset(y: whiteKeyHeight/2)
     }
     
     var body: some View {
@@ -105,8 +106,8 @@ struct KeyboardView: View {
         if #available(iOS 17.0, *) {
             keyboardView
                 .scrollPosition(id: $position, anchor: .top)
+                .defaultScrollAnchor(.center)
                 .scrollTargetBehavior(.viewAligned)
-                .safeAreaPadding(.vertical, 40)
         } else {
             keyboardView
         }
@@ -122,15 +123,18 @@ struct KeyboardView: View {
                     .border(.black, width: 4)
                     .overlay() {
                         HStack() {
-                            if (handedness == .right) {
-                                Spacer()
-                            }
-                            Text(note.key.description)
-                                .frame(width: fingerSize)
-                            if (handedness == .left) {
-                                Spacer()
+                            Spacer()
+                            if (note == Pitch("C4")) {
+                                // middle C
+                                Text("-C-")
+                                    .font(.title2).fontWeight(.bold)
+                                    .frame(width: fingerSize, alignment: .center)
+                            } else {
+                                Text(note.key.description)
+                                    .frame(width: fingerSize, alignment: .center)
                             }
                         }.padding(fingerSize/2)
+                            .environment(\.layoutDirection, (handedness == .right) ? .leftToRight : .rightToLeft)
                     }
             }
             Spacer()
@@ -147,16 +151,12 @@ struct KeyboardView: View {
                         .frame(height: blackKeyHeight)
                         .overlay() {
                             HStack() {
-                                if (handedness == .right) {
-                                    Spacer()
-                                }
+                                Spacer()
                                 Text(note.key.to(accidental: accidentals).description)
                                     .foregroundColor(.white)
                                     .frame(width: fingerSize)
-                                if (handedness == .left) {
-                                    Spacer()
-                                }
                             }.padding(fingerSize/2)
+                                .environment(\.layoutDirection, (handedness == .right) ? .leftToRight : .rightToLeft)
                         }
                 } else {
                     if ([Key("E"), Key("B")].contains(note.key)) {
@@ -167,7 +167,7 @@ struct KeyboardView: View {
             Spacer()
         }
         .frame(alignment: self.handedness == .right ?  .leading : .trailing)
-        .offset(y: whiteKeyHeight-(blackKeyHeight/2)-2)
+        .offset(y: whiteKeyHeight-(blackKeyHeight/2)-6)
     }
     
     var keyboardView: some View {
@@ -181,16 +181,11 @@ struct KeyboardView: View {
                         whiteKeysView
                     }
                     HStack() {
-                        if (handedness == .left) {
-                            Spacer()
-                        }
                         blackKeysView.frame(
                             width: geometry.size.width * 2/3
                         )
-                        if (handedness == .right) {
-                            Spacer()
-                        }
-                    }
+                        Spacer()
+                    }.environment(\.layoutDirection, (handedness == .right) ? .leftToRight : .rightToLeft)
                     notesView
                 }
             }.frame(height: (whiteKeyHeight-4) * CGFloat(wholeNotes.count))
