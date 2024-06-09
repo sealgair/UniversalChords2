@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AB018B012C12B13F00D4E572 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB018B002C12B13F00D4E572 /* KeyboardView.swift */; };
 		AB030C9D2BF055F100B7F385 /* FretBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB030C9C2BF055F100B7F385 /* FretBoardView.swift */; };
+		AB8E49692C1531D300F8E3C4 /* MusicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF77A1E2BE727E600108EB2 /* MusicExtensions.swift */; };
 		ABE66A602C0BCFDF00D9C64A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABE66A5F2C0BCFDF00D9C64A /* Launch Screen.storyboard */; };
 		ABE66A622C0C049200D9C64A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE66A612C0C049200D9C64A /* SettingsView.swift */; };
 		ABE66A642C0C07ED00D9C64A /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE66A632C0C07ED00D9C64A /* ColorExtensions.swift */; };
@@ -331,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABF77A012BE713F200108EB2 /* UniversalChordsTests.swift in Sources */,
+				AB8E49692C1531D300F8E3C4 /* MusicExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

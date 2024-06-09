@@ -14,46 +14,65 @@ struct KeyboardView: View {
     
     var chord: Chord
     
-    var whiteKeyHeight: CGFloat = 70
-    var blackKeyHeight: CGFloat = 55
+    let whiteKeyHeight: CGFloat = 70
+    let blackKeyHeight: CGFloat = 55
     let fingerSize: CGFloat = 40
+    let keyCount = 88
     
-    @State var position: Pitch? = Pitch(stringLiteral:"A0")
-    let baseNote = Pitch(stringLiteral:"A0")
+    @State var position: Pitch?
+    let lowestNote = Pitch(stringLiteral:"A0")
+    var highestNote: Pitch {
+        Pitch(rawValue: lowestNote.rawValue + keyCount-1)!
+    }
+    var baseNote: Pitch {
+        handedness == .left ? lowestNote : highestNote
+    }
     var topNote: Pitch {
         return position ?? baseNote
     }
     var notes: Array<Pitch> {
-        return (0..<88).map({Pitch(rawValue: baseNote.rawValue + $0)!})
+        let notes = (0..<keyCount).map({Pitch(rawValue: lowestNote.rawValue + $0)!})
+        if handedness == .right {
+            return notes.reversed()
+        } else {
+            return notes
+        }
     }
     var wholeNotes: Array<Pitch> {
-        notes.filter({ $0.key.accidental == .natural })
+        notes.filter({ $0.key.isNatural })
     }
     var halfNotes: Array<Pitch> {
-        notes.filter({ $0.key.accidental != .natural })
+        notes.filter({ !$0.key.isNatural })
     }
     
-    func noteOffset(key: Key, width: Double) -> CGSize {
-        var offset = CGSize(width: width, height: 0)
-        if key.accidental != .natural {
-            offset.width = width*2/3
-            offset.height = whiteKeyHeight/2
+    func notePosition(key: Key, width: Double) -> CGPoint {
+        var position = CGPoint(x: width, y: 0)
+        
+        if let nextNote = handedness == .right ? topNote.previousPitch(inKey: key) : topNote.nextPitch(inKey: key) {
+            position.y = CGFloat(baseNote.wholeDistance(to: nextNote)) * (whiteKeyHeight-4)
+        } else {
+            // some kind of error state?
+        }
+        
+        if !key.isNatural {
+            position.x = width*2/3
+            var yoff = whiteKeyHeight/2
             if key.accidental == .flat {
-                offset.height *= -1
+                yoff *= -1
             }
-            offset.height -= 2
+            position.y -= yoff + 2
         }
         if handedness == .left {
-            offset.width = 0
-            if key.accidental != .natural {
-                offset.width = width/3
+            position.x = 0
+            if !key.isNatural {
+                position.x = width/3
             }
-            offset.width += fingerSize
+            position.x += fingerSize
         } else {
-            offset.width -= fingerSize
+            position.x -= fingerSize
         }
-        offset.height -= 4
-        return offset
+        position.x -= 4
+        return position
     }
     
     var notesView: some View {
@@ -62,21 +81,15 @@ struct KeyboardView: View {
                 let foreground = Color.white
                 let background = Color.black
                 ForEach(chord.keys, id: \.self) { key in
-                    let natural = key.accidental == .natural
-                    if let targetNote = topNote.nextPitch(inKey: key) {
-                        let d = baseNote.wholeDistance(to: targetNote)
-                        let off = noteOffset(key: key, width: geometry.size.width)
-                        Text(key.to(accidental: accidentals).description)
-                            .foregroundStyle(natural ? foreground : background)
-                            .font(.title)
-                            .background(alignment: .center) {
-                                Circle()
-                                .fill(natural ? background : foreground)
-                                .frame(width: fingerSize, height: fingerSize)
-                            }
-                            .position(y: CGFloat(d) * (whiteKeyHeight-4))
-                            .offset(off)
-                    }
+                    Text(key.to(accidental: accidentals).description)
+                        .foregroundStyle(key.isNatural ? foreground : background)
+                        .font(.title)
+                        .background(alignment: .center) {
+                            Circle()
+                            .fill(key.isNatural ? background : foreground)
+                            .frame(width: fingerSize, height: fingerSize)
+                        }
+                        .position(notePosition(key: key, width: geometry.size.width))
                 }
             }
         }.offset(y: whiteKeyHeight/2+4)
@@ -84,6 +97,11 @@ struct KeyboardView: View {
     
     var body: some View {
 //        Text(topNote.description)
+//        HStack() {
+//            ForEach(chord.keys) { k in
+//                Text(k.description)
+//            }
+//        }
         if #available(iOS 17.0, *) {
             keyboardView
                 .scrollPosition(id: $position, anchor: .top)
@@ -123,7 +141,7 @@ struct KeyboardView: View {
         VStack(spacing: whiteKeyHeight - blackKeyHeight - 4) {
             // Black keys
             ForEach(notes) { note in
-                if (note.key.accidental != .natural) {
+                if (!note.key.isNatural) {
                     Rectangle()
                         .fill(.black)
                         .frame(height: blackKeyHeight)
@@ -157,7 +175,8 @@ struct KeyboardView: View {
             GeometryReader() { geometry in
                 ZStack() {
                     if #available(iOS 17.0, *) {
-                        whiteKeysView.scrollTargetLayout()
+                        whiteKeysView
+                            .scrollTargetLayout()
                     } else {
                         whiteKeysView
                     }
@@ -174,14 +193,14 @@ struct KeyboardView: View {
                     }
                     notesView
                 }
-            }.frame(height: (whiteKeyHeight-4) * 52)
+            }.frame(height: (whiteKeyHeight-4) * CGFloat(wholeNotes.count))
         }
     }
 }
 
 #Preview {
     return KeyboardView(
-        handedness: .right,
+        handedness: .left,
         chord: Chord(type: ChordType(third: .major), key: Key("A"))
     )
 }

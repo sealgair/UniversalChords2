@@ -68,6 +68,8 @@ extension Key: Identifiable {
     
     public var rawValue: Int { type.rawValue + accidental.rawValue }
     
+    public var isNatural: Bool { sharp.accidental == .natural }
+    
     func distance(to: Key) -> Int {
         var dist = to.rawValue - self.rawValue
         while dist < 0 {
@@ -116,8 +118,8 @@ extension Pitch: Hashable, Identifiable {
     
     func wholeDistance(to: Pitch) -> Int {
         var distance = 0
-        for rv in rawValue ... to.rawValue {
-            if rv != rawValue && Pitch(rawValue: rv)?.key.accidental == .natural {
+        for rv in stride(from: rawValue, to: to.rawValue, by: to.rawValue > rawValue ? 1 : -1) {
+            if Pitch(rawValue: rv)?.key.accidental == .natural {
                 distance += 1
             }
         }
@@ -126,5 +128,8 @@ extension Pitch: Hashable, Identifiable {
     
     func nextPitch(inKey: Key) -> Pitch? {
         return Pitch(rawValue: rawValue + key.distance(to: inKey))
+    }
+    func previousPitch(inKey: Key) -> Pitch? {
+        return Pitch(rawValue: rawValue - inKey.distance(to: key))
     }
 }

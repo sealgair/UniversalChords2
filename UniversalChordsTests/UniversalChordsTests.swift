@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import MusicTheory
 
 final class UniversalChordsTests: XCTestCase {
 
@@ -17,12 +18,18 @@ final class UniversalChordsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testNextPitch() throws {
+        // Verify that Pitch.nextPitch() returns the correct pitch
+    }
+    
+    func testPreviousPitch() throws {
+        // Verify that Pitch.previousPitch() returns the correct pitch
+    }
+    
+    func testWholeDIstance() throws {
+        // Verify that Pitch.wholeDistance() returns the correct distance between pitches
+        XCTAssertEqual(Pitch("A0").wholeDistance(to: Pitch("E1")), 4)
+        XCTAssertEqual(Pitch("A0").wholeDistance(to: Pitch("C#1")), 3)
     }
 
     func testPerformanceExample() throws {
