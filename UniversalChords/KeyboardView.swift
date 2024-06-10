@@ -71,7 +71,6 @@ struct KeyboardView: View {
         } else {
             position.x -= fingerSize
         }
-        position.x -= 4
         return position
     }
     
@@ -128,9 +127,11 @@ struct KeyboardView: View {
                                 // middle C
                                 Text("-C-")
                                     .font(.title2).fontWeight(.bold)
+                                    .foregroundColor(.black)
                                     .frame(width: fingerSize, alignment: .center)
                             } else {
                                 Text(note.key.description)
+                                    .foregroundColor(.black)
                                     .frame(width: fingerSize, alignment: .center)
                             }
                         }.padding(fingerSize/2)
@@ -172,24 +173,40 @@ struct KeyboardView: View {
     
     var keyboardView: some View {
         ScrollView() {
-            GeometryReader() { geometry in
-                ZStack() {
-                    if #available(iOS 17.0, *) {
-                        whiteKeysView
-                            .scrollTargetLayout()
-                    } else {
-                        whiteKeysView
+            if #available(iOS 17.0, *) {
+                scrollContent
+            } else {
+                // old style position tracking
+                scrollContent
+                    .background(GeometryReader { geometry in
+                        Color.clear
+                            .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("keyboardScroll")).origin)
+                    })
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                        self.position = wholeNotes[max(Int(-value.y/whiteKeyHeight)+1, 0)]
                     }
-                    HStack() {
-                        blackKeysView.frame(
-                            width: geometry.size.width * 2/3
-                        )
-                        Spacer()
-                    }.environment(\.layoutDirection, (handedness == .right) ? .leftToRight : .rightToLeft)
-                    notesView
+            }
+        }.coordinateSpace(name: "keyboardScroll")
+    }
+    
+    var scrollContent: some View {
+        GeometryReader() { geometry in
+            ZStack() {
+                if #available(iOS 17.0, *) {
+                    whiteKeysView
+                        .scrollTargetLayout()
+                } else {
+                    whiteKeysView
                 }
-            }.frame(height: (whiteKeyHeight-4) * CGFloat(wholeNotes.count))
-        }
+                HStack() {
+                    blackKeysView.frame(
+                        width: geometry.size.width * 2/3
+                    )
+                    Spacer()
+                }.environment(\.layoutDirection, (handedness == .right) ? .leftToRight : .rightToLeft)
+                notesView
+            }
+        }.frame(height: (whiteKeyHeight-4) * CGFloat(wholeNotes.count))
     }
 }
 
